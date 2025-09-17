@@ -18,7 +18,7 @@ private:
 
     // Core functionalities
     void displayMenu();
-    void processSelection();
+    bool processSelection();
     void addMoney(double amount);
     void dispenseItem(Item* item);
 

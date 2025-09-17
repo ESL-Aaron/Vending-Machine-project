@@ -57,7 +57,7 @@ Item* VendingMachine::findItemByCode(int code) {
 }
 
 // Handles the entire selection process, grom input to dispensing
-void VendingMachine::processSelection() {
+bool VendingMachine::processSelection() {
     int selectionCode;
     std::cout << "Please enter the code of the item you want to buy: ";
     std::cin >> selectionCode;

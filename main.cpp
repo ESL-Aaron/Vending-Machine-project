@@ -14,7 +14,7 @@ int main() {
     VendingMachine machine;
     int choice;
     double amount;
-    char continueShopping; // Variável para controlar a compra contínua
+    char continueShopping; // To control the shopping loop
 
     do {
         clearScreen();
@@ -35,10 +35,14 @@ int main() {
         switch (choice) {
             case 1:
                 do {
-                    machine.processSelection(); // Processa a compra de um único item
+                    bool purchaseSucess = machine.processSelection(); // Call the updated method
+                    if (purchaseSucess) {
                     std::cout << "\nDo you want to buy another item? (y/n): ";
                     std::cin >> continueShopping;
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    } else {
+                        continueShopping = 'n'; // Exit if purchase was not successful
+                    }
                 } while (continueShopping == 'y' || continueShopping == 'Y');
                 break;
             case 2:
