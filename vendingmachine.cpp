@@ -74,16 +74,25 @@ bool VendingMachine::processSelection() {
     // Check if item is in stock
     if (selectedItem->getQuantity() == 0) {
         std::cout << "Sorry, this item is out of stock. Please choose another item." << std::endl;
-        return;
+        std::cout << "Press Enter to continue...";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();
+        return false;
     }
+    
     // Check if user has enough money
     std::cout << "You selected: " << selectedItem->getName() << " for $" << selectedItem->getPrice() << std::endl;
     std::cout << "Your current balance is: $" << currentMoney << std::endl;
     
     if (currentMoney >= selectedItem->getPrice()) {
         dispenseItem(selectedItem);
+        return true;
     } else {
         std::cout << "Insufficient funds. Please add more money." << std::endl;
+        std::cout << "Press Enter to continue...";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();
+        return false;
     }
 }
 
@@ -108,13 +117,15 @@ void VendingMachine::returnChange() {
     }
 }
 
-// "Dispenses" the item and calculates change
+
+// "Dispenses" the item and deducts the price from balance
 void VendingMachine::dispenseItem(Item* item) {
     if (item == nullptr) {
         std::cout << "Error: Invalid item." << std::endl;
         return;
     }
 
+    // Only deduct the price instead of resetting to zero
     currentMoney -= item->getPrice();
     item->decreaseQuantity(); // Decrease the stock of the item
 
