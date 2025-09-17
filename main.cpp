@@ -23,7 +23,7 @@ int main() {
         std::cout << "\nWhat would you like to do?" << std::endl;
         std::cout << "1. Buy an item" << std::endl;
         std::cout << "2. Insert money" << std::endl;
-        std::cout << "3. Exit" << std::endl;
+        std::cout << "3. Exit and get change" << std::endl;
         std::cout << "Enter your choice: ";
         
         while (!(std::cin >> choice) || (choice < 1 || choice > 3)) {
@@ -35,8 +35,8 @@ int main() {
         switch (choice) {
             case 1:
                 do {
-                    bool purchaseSucess = machine.processSelection(); // Call the updated method
-                    if (purchaseSucess) {
+                    bool purchaseSuccess = machine.processSelection(); // Call the updated method
+                    if (purchaseSuccess) {
                     std::cout << "\nDo you want to buy another item? (y/n): ";
                     std::cin >> continueShopping;
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -55,8 +55,9 @@ int main() {
                 machine.addMoney(amount);
                 break;
             case 3:
-                std::cout << "Thank you for using our Vending Machine. Goodbye!" << std::endl;
-                break;
+                 machine.returnChange(); // Return any remaining change
+                 std::cout << "Thank you for using our Vending Machine. Goodbye!" << std::endl;
+                 break;
         }
 
         if (choice != 3) {

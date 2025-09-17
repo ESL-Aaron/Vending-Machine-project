@@ -73,7 +73,7 @@ bool VendingMachine::processSelection() {
 
     // Check if item is in stock
     if (selectedItem->getQuantity() == 0) {
-        std::cout << "Sorry, this item is oout of stock. Please choose another item." << std::endl;
+        std::cout << "Sorry, this item is out of stock. Please choose another item." << std::endl;
         return;
     }
     // Check if user has enough money
@@ -99,6 +99,15 @@ void VendingMachine::addMoney(double amount) {
     }
 }
 
+void VendingMachine::returnChange() {
+    if (currentMoney > 0) {
+        std::cout << "Returning your change: $" << std::fixed << std::setprecision(2) << currentMoney << std::endl;
+        currentMoney = 0.0;
+    } else {
+        std::cout << "No change to return." << std::endl;
+    }
+}
+
 // "Dispenses" the item and calculates change
 void VendingMachine::dispenseItem(Item* item) {
     if (item == nullptr) {
@@ -106,16 +115,10 @@ void VendingMachine::dispenseItem(Item* item) {
         return;
     }
 
-    double change = currentMoney - item->getPrice();
-    currentMoney = 0.0; // Reset balance after purchase
+    currentMoney -= item->getPrice();
     item->decreaseQuantity(); // Decrease the stock of the item
 
     std::cout << "Dispensing " << item->getName() << "..." << std::endl;
     std::cout << "Please take your item." << std::endl;
-
-    if (change > 0) {
-        std::cout << "Your change is: $" << std::fixed << std::setprecision(2) << change << std::endl;
-    } else {
-        std::cout << "No change due." << std::endl;
-    }
+    std::cout << "Remaining balance: $" << std::fixed << std::setprecision(2) << currentMoney << std::endl;
 }

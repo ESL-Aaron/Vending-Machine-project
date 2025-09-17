@@ -25,6 +25,8 @@ private:
     // Restock feature
     void restockItems();
 
+    // New method to return change
+    void returnChange();
 private:
     // Helper methods
     Item* findItemByCode(int code);
